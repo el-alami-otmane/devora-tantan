@@ -1,186 +1,223 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" dir="ltr" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#05070c">
   <meta name="description" content="DEVORA rassemble, forme et accompagne la jeunesse de Tan-Tan autour du code, de l'innovation et des métiers numériques.">
-  <title>DEVORA — La technologie prend racine à Tan-Tan</title>
+  <title>DEVORA — Coder l'avenir depuis Tan-Tan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='15' fill='%2305070c'/%3E%3Cpath d='M11 32 23 20l5 5-7 7 7 7-5 5L11 32Zm42 0L41 20l-5 5 7 7-7 7 5 5 12-12Z' fill='%232e90ff'/%3E%3Cpath d='M29 15h7l-5 34h-7l5-34Z' fill='%23f4f7fb'/%3E%3C/svg%3E">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070c'/%3E%3Cpath d='M9 32 22 19l5 5-8 8 8 8-5 5L9 32Zm46 0L42 19l-5 5 8 8-8 8 5 5 13-13Z' fill='%232d8cff'/%3E%3Cpath d='m29 14 8 0-6 36h-8l6-36Z' fill='%23eef7ff'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="./styles.css">
 </head>
-<body>
-  <a class="skip-link" href="#main">Aller au contenu</a>
-  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+<body class="loading">
+  <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+
+  <div class="loader" id="loader" aria-label="Chargement">
+    <div class="loader-core">
+      <img src="./assets/devora-logo-hd.png" alt="DEVORA">
+      <div class="loader-terminal" aria-hidden="true"><span>&gt;</span> <b id="loaderText">initializing community...</b><i></i></div>
+      <div class="loader-track"><span></span></div>
+    </div>
+  </div>
+
+  <div class="page-progress" aria-hidden="true"><span id="pageProgress"></span></div>
 
   <header class="site-header" id="siteHeader">
-    <a class="brand" href="#accueil" aria-label="DEVORA — Accueil">
-      <img src="./assets/devora-logo.png" alt="">
-      <span>DEVORA</span>
+    <a class="brand" href="#home" aria-label="DEVORA — Accueil">
+      <img src="./assets/devora-logo-hd.png" alt="">
     </a>
-    <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="siteNav">
-      <span></span><span></span><span></span><span class="sr-only">Ouvrir le menu</span>
-    </button>
-    <nav class="site-nav" id="siteNav" aria-label="Navigation principale">
-      <a href="#histoire">À propos</a>
-      <a href="#mission">Mission</a>
-      <a href="#programmes">Programmes</a>
-      <a class="nav-action" href="#contact">Nous rejoindre</a>
+
+    <nav class="desktop-nav" aria-label="Navigation principale">
+      <a href="#about" data-i18n="nav_about">À propos</a>
+      <a href="#mission" data-i18n="nav_mission">Mission</a>
+      <a href="#programs" data-i18n="nav_programs">Programmes</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
     </nav>
+
+    <div class="header-tools">
+      <div class="language-switcher" role="group" aria-label="Langue">
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="ar" aria-pressed="false">AR</button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Activer le thème clair">
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+      </button>
+      <a class="header-cta" href="#contact" data-i18n="nav_join">Nous rejoindre</a>
+      <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="mobileNav">
+        <span></span><span></span><span></span><b class="sr-only" data-i18n="menu_open">Ouvrir le menu</b>
+      </button>
+    </div>
   </header>
 
+  <aside class="mobile-nav" id="mobileNav" aria-hidden="true">
+    <nav aria-label="Navigation mobile">
+      <a href="#about"><small>01</small><span data-i18n="nav_about">À propos</span></a>
+      <a href="#mission"><small>02</small><span data-i18n="nav_mission">Mission</span></a>
+      <a href="#programs"><small>03</small><span data-i18n="nav_programs">Programmes</span></a>
+      <a href="#contact"><small>04</small><span data-i18n="nav_contact">Contact</span></a>
+    </nav>
+    <p data-i18n="mobile_note">Une communauté qui transforme la curiosité en capacité d'agir.</p>
+  </aside>
+
   <main id="main">
-    <section class="hero" id="accueil">
+    <section class="hero" id="home">
+      <canvas id="networkCanvas" aria-hidden="true"></canvas>
       <div class="hero-grid" aria-hidden="true"></div>
-      <div class="hero-orbit orbit-one" aria-hidden="true"></div>
-      <div class="hero-orbit orbit-two" aria-hidden="true"></div>
-      <div class="hero-copy reveal is-visible">
-        <p class="eyebrow"><span></span> Association technologique · Tan-Tan</p>
-        <h1>Le futur ne se prédit pas.<br><em>Il se code ici.</em></h1>
-        <p class="hero-lead">DEVORA transforme la curiosité en compétences, les idées en projets et les jeunes talents de Tan-Tan en créateurs du numérique.</p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#programmes">Explorer nos programmes</a>
-          <a class="button button-quiet" href="#contact">Rejoindre la communauté</a>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="eyebrow hero-enter"><span class="live-pulse"></span><span data-i18n="hero_kicker">Association technologique · Tan-Tan</span></p>
+        <h1 class="hero-enter">
+          <span data-i18n="hero_title_1">On ne regarde pas</span>
+          <span data-i18n="hero_title_2">le futur arriver.</span>
+          <em data-i18n="hero_title_3">On le programme.</em>
+        </h1>
+        <p class="hero-lead hero-enter" data-i18n="hero_desc">DEVORA donne aux jeunes les compétences, l'espace et la communauté pour transformer une ligne de code en possibilité réelle.</p>
+        <div class="hero-actions hero-enter">
+          <a class="button primary" href="#programs"><span data-i18n="hero_primary">Découvrir les programmes</span><i aria-hidden="true">↘</i></a>
+          <a class="button ghost" href="#about"><span data-i18n="hero_secondary">Notre histoire</span></a>
         </div>
-        <div class="hero-proof" aria-label="Chiffres clés">
-          <div><strong data-count="50">50+</strong><span>Membres actifs</span></div>
-          <div><strong data-count="20">20+</strong><span>Ateliers</span></div>
-          <div><strong data-count="10">10+</strong><span>Clubs tech</span></div>
+        <div class="hero-stats hero-enter" aria-label="Chiffres clés">
+          <div><strong>50<span>+</span></strong><small data-i18n="stat_members">Membres actifs</small></div>
+          <div><strong>20<span>+</span></strong><small data-i18n="stat_workshops">Ateliers menés</small></div>
+          <div><strong>10<span>+</span></strong><small data-i18n="stat_clubs">Clubs tech</small></div>
         </div>
       </div>
 
-      <div class="hero-mark reveal is-visible" aria-label="DEVORA, code the future">
-        <div class="mark-glow"></div>
-        <div class="mark-panel">
-          <span class="panel-index">DVR / 01</span>
-          <img src="./assets/devora-logo.png" alt="Logo DEVORA — Code the future">
-          <p>Apprendre <span>·</span> Construire <span>·</span> Transmettre</p>
-        </div>
-        <div class="signal-card">
-          <span class="signal-dot"></span>
-          <span>Communauté active</span>
-          <strong>Tan-Tan, Maroc</strong>
-        </div>
+      <div class="hero-visual hero-enter" aria-label="DEVORA — Code the future">
+        <div class="orbit orbit-a"><i></i><i></i></div>
+        <div class="orbit orbit-b"><i></i></div>
+        <div class="code-fragment fragment-a" aria-hidden="true"><span>01</span> dream();</div>
+        <div class="code-fragment fragment-b" aria-hidden="true"><span>02</span> learn();</div>
+        <div class="code-fragment fragment-c" aria-hidden="true"><span>03</span> build();</div>
+        <img class="hero-logo" src="./assets/devora-logo-hd.png" alt="DEVORA — Code the future">
+        <div class="hero-signal"><span></span><b data-i18n="hero_signal">Système communautaire actif</b><small>28.438° N · 11.103° W</small></div>
       </div>
-      <a class="scroll-cue" href="#histoire"><span></span>Découvrir</a>
+
+      <a class="scroll-marker" href="#about"><span></span><b data-i18n="scroll">Défiler pour explorer</b></a>
     </section>
 
-    <section class="story section" id="histoire">
-      <div class="section-kicker reveal"><span>01</span> Notre histoire</div>
-      <div class="story-layout">
-        <div class="story-heading reveal">
-          <h2>Une idée locale.<br><em>Une ambition sans limites.</em></h2>
+    <section class="section about" id="about">
+      <div class="section-index reveal"><span>01</span><b data-i18n="about_kicker">Origine / Vision</b></div>
+      <div class="about-intro">
+        <h2 class="reveal"><span data-i18n="about_title_1">Une étincelle locale.</span><em data-i18n="about_title_2">Un impact qui dépasse l'écran.</em></h2>
+        <div class="about-copy reveal">
+          <p class="lead" data-i18n="about_lead">DEVORA est une association à but non lucratif qui fait de la technologie un levier de confiance, de création et d'opportunité pour la jeunesse.</p>
+          <p data-i18n="about_body">Fondée à Tan-Tan le 9 octobre 2025 à l'initiative d'Abdellah Boudia, elle réunit apprenants, développeurs, formateurs et partenaires autour d'une conviction simple : le talent existe partout, il lui faut un espace pour grandir.</p>
         </div>
-        <div class="story-copy reveal">
-          <p class="story-intro">DEVORA est une association à but non lucratif dédiée à la technologie, à l'innovation et au développement de la jeunesse à Tan-Tan.</p>
-          <p>Née de la vision d'<strong>Abdllah Boudia</strong>, formateur passionné, l'association a été fondée le 9 octobre 2025 après plusieurs années de réflexion : créer un espace où chacun peut apprendre, expérimenter et partager autour du numérique.</p>
-          <p>Aujourd'hui, développeurs, formateurs et innovateurs avancent ensemble pour faire de Tan-Tan un pôle technologique de référence au Maroc.</p>
-        </div>
-        <figure class="founder-card reveal">
-          <div class="founder-image">
-            <img src="./assets/devora-event.jpg" alt="Portrait d'Abdllah Boudia, fondateur de DEVORA">
+      </div>
+
+      <div class="founder-layout">
+        <figure class="founder-portrait reveal">
+          <div class="portrait-frame">
+            <img src="./assets/abdellah-boudia.jpg" alt="Portrait d'Abdellah Boudia, fondateur de DEVORA" data-i18n-alt="founder_alt">
+            <span class="portrait-scan" aria-hidden="true"></span>
+            <div class="portrait-coordinates" aria-hidden="true">DVR // FOUNDER // 2025</div>
           </div>
-          <figcaption>
-            <span>Fondateur & formateur</span>
-            <strong>Abdllah Boudia</strong>
-            <blockquote>« Donner aux jeunes les outils pour construire leur propre avenir numérique. »</blockquote>
-          </figcaption>
+          <figcaption><span data-i18n="founder_role">Fondateur · Formateur</span><strong>Abdellah Boudia</strong></figcaption>
         </figure>
-        <div class="values-grid reveal">
-          <article><span>01</span><h3>Accessible</h3><p>Des parcours ouverts à celles et ceux qui veulent apprendre, quel que soit leur point de départ.</p></article>
-          <article><span>02</span><h3>Concret</h3><p>On progresse en créant : ateliers, défis, prototypes et projets ancrés dans le réel.</p></article>
-          <article><span>03</span><h3>Collectif</h3><p>La connaissance circule. Les membres apprennent ensemble et font grandir leur région.</p></article>
+
+        <div class="founder-manifesto reveal">
+          <span class="quote-mark">“</span>
+          <blockquote data-i18n="founder_quote">Nous ne voulons pas seulement apprendre aux jeunes à utiliser la technologie. Nous voulons leur donner la confiance nécessaire pour la créer.</blockquote>
+          <div class="manifesto-values">
+            <article><span>01</span><h3 data-i18n="value_1_title">Ouvert</h3><p data-i18n="value_1_desc">Un point de départ pour chaque niveau.</p></article>
+            <article><span>02</span><h3 data-i18n="value_2_title">Pratique</h3><p data-i18n="value_2_desc">On apprend en construisant du réel.</p></article>
+            <article><span>03</span><h3 data-i18n="value_3_title">Collectif</h3><p data-i18n="value_3_desc">Le savoir grandit quand il circule.</p></article>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="mission section" id="mission">
-      <div class="mission-shell">
-        <div class="section-kicker light reveal"><span>02</span> Notre mission</div>
-        <div class="mission-top reveal">
-          <h2>Transformer l'envie<br>en <em>capacité d'agir.</em></h2>
-          <p>Un écosystème pour apprendre les technologies d'aujourd'hui, imaginer les solutions de demain et créer des opportunités durables à Tan-Tan.</p>
-        </div>
-        <div class="mission-path" aria-label="Parcours DEVORA">
-          <article class="reveal"><span class="path-number">01</span><div class="path-icon">&lt;/&gt;</div><h3>Apprendre</h3><p>Du web à Python, des bases numériques aux frameworks modernes.</p></article>
-          <article class="reveal"><span class="path-number">02</span><div class="path-icon">◎</div><h3>Expérimenter</h3><p>Des ateliers pratiques, hackathons et projets scientifiques.</p></article>
-          <article class="reveal"><span class="path-number">03</span><div class="path-icon">↗</div><h3>Créer</h3><p>Des solutions utiles, des jeux, des produits et des initiatives locales.</p></article>
-          <article class="reveal"><span class="path-number">04</span><div class="path-icon">∞</div><h3>Transmettre</h3><p>Une communauté où les compétences et les opportunités circulent.</p></article>
-        </div>
+    <section class="section mission" id="mission">
+      <div class="mission-backdrop" aria-hidden="true">&lt;MISSION/&gt;</div>
+      <div class="section-index reveal"><span>02</span><b data-i18n="mission_kicker">Mission / Statuts</b></div>
+      <div class="mission-heading reveal">
+        <h2><span data-i18n="mission_title_1">Du code.</span><span data-i18n="mission_title_2">Des idées.</span><em data-i18n="mission_title_3">De l'impact.</em></h2>
+        <p data-i18n="mission_desc">Nos statuts tracent une mission claire : faire progresser la culture technologique et scientifique, soutenir la création et inventer des solutions utiles à la communauté.</p>
+      </div>
+
+      <div class="mission-grid">
+        <article class="mission-card reveal"><div class="card-top"><span>01</span><b>&lt;/&gt;</b></div><h3 data-i18n="mission_1_title">Culture numérique</h3><p data-i18n="mission_1_desc">Développer les compétences technologiques et rendre le numérique accessible.</p><i></i></article>
+        <article class="mission-card reveal"><div class="card-top"><span>02</span><b>◈</b></div><h3 data-i18n="mission_2_title">Solutions locales</h3><p data-i18n="mission_2_desc">Explorer les défis de la société et prototyper des réponses créatives.</p><i></i></article>
+        <article class="mission-card reveal"><div class="card-top"><span>03</span><b>PLAY</b></div><h3 data-i18n="mission_3_title">Jeux vidéo</h3><p data-i18n="mission_3_desc">Faire émerger les talents et stimuler une industrie créative locale.</p><i></i></article>
+        <article class="mission-card reveal"><div class="card-top"><span>04</span><b>LAB</b></div><h3 data-i18n="mission_4_title">Ateliers scientifiques</h3><p data-i18n="mission_4_desc">Apprendre par l'expérience, les essais, les erreurs et la collaboration.</p><i></i></article>
+        <article class="mission-card reveal"><div class="card-top"><span>05</span><b>LIVE</b></div><h3 data-i18n="mission_5_title">Événements & camps</h3><p data-i18n="mission_5_desc">Créer des rencontres, conférences et expériences thématiques mémorables.</p><i></i></article>
+        <article class="mission-card reveal"><div class="card-top"><span>06</span><b>∞</b></div><h3 data-i18n="mission_6_title">Clubs & partenariats</h3><p data-i18n="mission_6_desc">Relier les passionnés, associations, institutions et acteurs publics.</p><i></i></article>
       </div>
     </section>
 
-    <section class="programs section" id="programmes">
-      <div class="section-kicker reveal"><span>03</span> Nos programmes</div>
-      <div class="programs-head reveal">
-        <h2>Choisissez votre<br><em>terrain de jeu.</em></h2>
-        <p>Des formats pensés pour passer rapidement de la théorie à la pratique, seul ou en équipe.</p>
+    <section class="code-break" aria-label="Manifeste DEVORA">
+      <div class="terminal reveal">
+        <div class="terminal-bar"><div><i></i><i></i><i></i></div><span>devora@tantan:~/future</span><b>⌘ K</b></div>
+        <div class="terminal-body">
+          <p><span class="prompt">$</span> <span class="command">devora run</span> <span data-i18n="terminal_command">--mission build-the-future</span></p>
+          <p class="terminal-output"><span>✓</span> <b data-i18n="terminal_1">curiosity</b> <small data-i18n="terminal_ready">ready</small></p>
+          <p class="terminal-output"><span>✓</span> <b data-i18n="terminal_2">knowledge</b> <small data-i18n="terminal_ready">ready</small></p>
+          <p class="terminal-output"><span>✓</span> <b data-i18n="terminal_3">community</b> <small data-i18n="terminal_ready">ready</small></p>
+          <p class="terminal-result"><span>&gt;</span> <strong data-i18n="terminal_result">Future compiled successfully.</strong><i></i></p>
+        </div>
       </div>
-      <div class="filter-bar reveal" role="group" aria-label="Filtrer les programmes">
-        <button class="filter is-active" type="button" data-filter="all">Tous</button>
-        <button class="filter" type="button" data-filter="learn">Formation</button>
-        <button class="filter" type="button" data-filter="build">Création</button>
-        <button class="filter" type="button" data-filter="meet">Événements</button>
+      <p class="break-statement reveal" data-i18n="break_statement">La prochaine grande idée peut naître ici. Dans une salle, autour d'un ordinateur, entre des personnes qui décident d'essayer.</p>
+    </section>
+
+    <section class="section programs" id="programs">
+      <div class="section-index reveal"><span>03</span><b data-i18n="programs_kicker">Programmes / Expériences</b></div>
+      <div class="programs-heading reveal">
+        <h2><span data-i18n="programs_title_1">Apprendre.</span><span data-i18n="programs_title_2">Créer.</span><em data-i18n="programs_title_3">Partager.</em></h2>
+        <p data-i18n="programs_desc">Des parcours concrets pour passer d'une première ligne de code à un projet qui fonctionne.</p>
       </div>
+
+      <div class="filter-row reveal" role="group" aria-label="Filtrer les programmes">
+        <button class="filter active" type="button" data-filter="all" data-i18n="filter_all">Tous</button>
+        <button class="filter" type="button" data-filter="learn" data-i18n="filter_learn">Apprendre</button>
+        <button class="filter" type="button" data-filter="build" data-i18n="filter_build">Créer</button>
+        <button class="filter" type="button" data-filter="connect" data-i18n="filter_connect">Rencontrer</button>
+      </div>
+
       <div class="program-grid" id="programGrid">
-        <article class="program-card feature reveal" data-category="learn build">
-          <div class="card-meta"><span>Développement</span><span>01</span></div>
-          <div class="code-window" aria-hidden="true"><div><i></i><i></i><i></i></div><pre><span>const</span> avenir = {
-  curiosité: <b>true</b>,
-  pratique: <b>"chaque jour"</b>,
-  limite: <b>null</b>
-};</pre></div>
-          <h3>Web & applications</h3><p>HTML, CSS, JavaScript, React, Laravel et les outils pour donner vie à une idée.</p>
+        <article class="program-card featured reveal" data-category="learn build">
+          <div class="program-visual code-visual" aria-hidden="true"><span>DEVORA</span><pre><b>const</b> idea = learn();
+<b>while</b> (curious) {
+  idea.build();
+  community.share(idea);
+}</pre></div>
+          <div class="program-content"><span>01 / DEV</span><h3 data-i18n="program_1_title">Développement web</h3><p data-i18n="program_1_desc">HTML, CSS, JavaScript, React, backend et déploiement : construire pour le vrai web.</p><small>HTML · CSS · JS · REACT · PHP</small></div>
         </article>
-        <article class="program-card reveal" data-category="learn build">
-          <div class="card-meta"><span>Programmation</span><span>02</span></div>
-          <div class="card-symbol">PY</div><h3>Python & backend</h3><p>Logique, automatisation, API et applications robustes avec Python, Node.js et PHP.</p>
-        </article>
-        <article class="program-card reveal" data-category="meet build">
-          <div class="card-meta"><span>Challenge</span><span>03</span></div>
-          <div class="card-symbol">24H</div><h3>Hackathons</h3><p>Des équipes, un défi réel et un temps limité pour imaginer une solution qui compte.</p>
-        </article>
-        <article class="program-card reveal" data-category="learn build">
-          <div class="card-meta"><span>Sciences</span><span>04</span></div>
-          <div class="card-symbol">I/O</div><h3>Robotique & IoT</h3><p>Électronique, objets connectés et sciences appliquées à travers des ateliers concrets.</p>
-        </article>
-        <article class="program-card reveal" data-category="build">
-          <div class="card-meta"><span>Création</span><span>05</span></div>
-          <div class="card-symbol">PLAY</div><h3>Jeux vidéo</h3><p>Conception, narration et technologies interactives pour créer des expériences immersives.</p>
-        </article>
-        <article class="program-card reveal" data-category="meet">
-          <div class="card-meta"><span>Rencontres</span><span>06</span></div>
-          <div class="card-symbol">LIVE</div><h3>Conférences tech</h3><p>Des échanges avec des experts, des retours d'expérience et de nouvelles perspectives.</p>
-        </article>
+        <article class="program-card reveal" data-category="learn build"><div class="program-icon">PY</div><div class="program-content"><span>02 / CODE</span><h3 data-i18n="program_2_title">Python & logique</h3><p data-i18n="program_2_desc">Automatiser, résoudre des problèmes et comprendre comment pense un programme.</p><small>PYTHON · API · AUTOMATION</small></div></article>
+        <article class="program-card reveal" data-category="build"><div class="program-icon">PLAY</div><div class="program-content"><span>03 / GAME</span><h3 data-i18n="program_3_title">Création de jeux</h3><p data-i18n="program_3_desc">Du concept au prototype : design, narration, mécanique et expérience interactive.</p><small>DESIGN · LOGIC · 3D</small></div></article>
+        <article class="program-card reveal" data-category="learn build"><div class="program-icon">I/O</div><div class="program-content"><span>04 / LAB</span><h3 data-i18n="program_4_title">Robotique & IoT</h3><p data-i18n="program_4_desc">Faire dialoguer code, capteurs et objets à travers des expériences scientifiques.</p><small>ARDUINO · IOT · SCIENCE</small></div></article>
+        <article class="program-card reveal" data-category="connect build"><div class="program-icon">24H</div><div class="program-content"><span>05 / BUILD</span><h3 data-i18n="program_5_title">Hackathons</h3><p data-i18n="program_5_desc">Une équipe, un défi, peu de temps : apprendre vite et présenter une solution.</p><small>TEAM · SPRINT · PITCH</small></div></article>
+        <article class="program-card reveal" data-category="connect"><div class="program-icon">LIVE</div><div class="program-content"><span>06 / MEET</span><h3 data-i18n="program_6_title">Conférences & clubs</h3><p data-i18n="program_6_desc">Partager l'expérience, rencontrer des experts et faire vivre une communauté durable.</p><small>TALKS · CLUBS · NETWORK</small></div></article>
       </div>
     </section>
 
-    <section class="contact section" id="contact">
+    <section class="section contact" id="contact">
       <div class="contact-shell">
-        <div class="contact-aside reveal">
-          <div class="section-kicker light"><span>04</span> Nous rejoindre</div>
-          <h2>Votre prochaine idée<br>commence par un <em>bonjour.</em></h2>
-          <p>Une question sur un programme, une envie de partenariat ou simplement l'envie de rejoindre la communauté ? Écrivez-nous.</p>
-          <div class="contact-lines">
-            <a href="mailto:administration@devora-info.net"><span>Email</span>administration@devora-info.net</a>
-            <a href="tel:+212785148503"><span>Téléphone</span>+212 785 148 503</a>
-            <div><span>Adresse</span>Tan-Tan, Maroc</div>
+        <div class="contact-copy reveal">
+          <div class="section-index"><span>04</span><b data-i18n="contact_kicker">Connexion / Communauté</b></div>
+          <h2><span data-i18n="contact_title_1">Vous avez la curiosité.</span><em data-i18n="contact_title_2">Nous avons le point de départ.</em></h2>
+          <p data-i18n="contact_desc">Rejoignez un programme, proposez un partenariat ou venez simplement rencontrer celles et ceux qui construisent déjà.</p>
+          <div class="contact-data">
+            <a href="mailto:administration@devora-info.net"><small data-i18n="contact_email">E-mail</small><b>administration@devora-info.net</b></a>
+            <a href="tel:+212785148503"><small data-i18n="contact_phone">Téléphone</small><b>+212 785 148 503</b></a>
+            <div><small data-i18n="contact_location">Siège</small><b data-i18n="contact_address">Dar Chabab Bir Anzaran, Tan-Tan</b></div>
           </div>
-          <div class="social-links">
-            <a href="https://www.instagram.com/devora_tantan" target="_blank" rel="noreferrer">Instagram</a>
-            <a href="https://web.facebook.com/profile.php?id=61576393482712" target="_blank" rel="noreferrer">Facebook</a>
-          </div>
+          <div class="socials"><a href="https://www.instagram.com/devora_tantan" target="_blank" rel="noreferrer">Instagram</a><a href="https://web.facebook.com/profile.php?id=61576393482712" target="_blank" rel="noreferrer">Facebook</a></div>
         </div>
+
         <form class="contact-form reveal" id="contactForm">
-          <div class="form-head"><span>Parlons de votre projet</span><small>Tous les champs sont requis</small></div>
-          <label for="name">Nom complet<input id="name" name="name" type="text" autocomplete="name" required placeholder="Votre nom"></label>
-          <label for="email">Adresse e-mail<input id="email" name="email" type="email" autocomplete="email" required placeholder="vous@exemple.com"></label>
-          <label for="subject">Sujet<select id="subject" name="subject" required><option value="" selected disabled>Choisir un sujet</option><option>Rejoindre DEVORA</option><option>Formation & ateliers</option><option>Partenariat</option><option>Information générale</option><option>Autre</option></select></label>
-          <label for="message">Message<textarea id="message" name="message" rows="5" required placeholder="Parlez-nous de votre demande..."></textarea></label>
-          <button class="button button-primary submit-button" id="submitButton" type="submit">Envoyer le message</button>
+          <div class="form-heading"><span>MESSAGE.DVR</span><small data-i18n="form_required">Tous les champs sont requis</small></div>
+          <label for="name"><span data-i18n="form_name">Nom complet</span><input id="name" type="text" autocomplete="name" required data-i18n-placeholder="form_name_placeholder" placeholder="Votre nom"></label>
+          <label for="email"><span data-i18n="form_email">Adresse e-mail</span><input id="email" type="email" autocomplete="email" required placeholder="vous@exemple.com"></label>
+          <label for="subject"><span data-i18n="form_subject">Sujet</span><select id="subject" required><option value="" selected disabled data-i18n="form_choose">Choisir un sujet</option><option data-i18n="form_option_join">Rejoindre DEVORA</option><option data-i18n="form_option_training">Formation & ateliers</option><option data-i18n="form_option_partner">Partenariat</option><option data-i18n="form_option_info">Information générale</option></select></label>
+          <label for="message"><span data-i18n="form_message">Message</span><textarea id="message" rows="5" required data-i18n-placeholder="form_message_placeholder" placeholder="Parlez-nous de votre idée..."></textarea></label>
+          <button class="button primary submit" id="submitButton" type="submit"><span data-i18n="form_submit">Envoyer le message</span><i aria-hidden="true">↗</i></button>
           <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -188,9 +225,9 @@
   </main>
 
   <footer>
-    <div class="footer-brand"><img src="./assets/devora-logo.png" alt=""><span>DEVORA</span></div>
-    <p>Code the future · Tan-Tan, Maroc</p>
-    <p>© 2026 DEVORA. Tous droits réservés.</p>
+    <a class="footer-logo" href="#home"><img src="./assets/devora-logo-hd.png" alt="DEVORA"></a>
+    <p data-i18n="footer_line">Coder l'avenir depuis Tan-Tan.</p>
+    <div><span>© 2026 DEVORA</span><a href="#home" data-i18n="footer_top">Retour en haut ↑</a></div>
   </footer>
 
   <script src="./script.js"></script>
