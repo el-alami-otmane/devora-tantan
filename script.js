@@ -255,9 +255,13 @@ contactForm.addEventListener('submit', async (event) => {
   }
 });
 
-window.addEventListener('load', () => {
-  window.setTimeout(() => {
-    loader.classList.add('done');
-    body.classList.remove('loading');
-  }, prefersReducedMotion ? 0 : 850);
-});
+function dismissLoader() {
+  if (window.__devoraLoaderSafety) window.clearTimeout(window.__devoraLoaderSafety);
+  if (loader) loader.classList.add('done');
+  body.classList.remove('loading');
+}
+
+// Do not wait for every remote font or image. The interface becomes usable as
+// soon as the document is ready, and the inline safety timer covers JS errors.
+window.setTimeout(dismissLoader, prefersReducedMotion ? 0 : 720);
+window.addEventListener('pageshow', dismissLoader, { once: true });

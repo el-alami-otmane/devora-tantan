@@ -9,7 +9,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Kufi+Arabic:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305070c'/%3E%3Cpath d='M9 32 22 19l5 5-8 8 8 8-5 5L9 32Zm46 0L42 19l-5 5 8 8-8 8 5 5 13-13Z' fill='%232d8cff'/%3E%3Cpath d='m29 14 8 0-6 36h-8l6-36Z' fill='%23eef7ff'/%3E%3C/svg%3E">
+  <link rel="icon" href="./assets/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/devora-favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="loading">
@@ -17,11 +19,20 @@
 
   <div class="loader" id="loader" aria-label="Chargement">
     <div class="loader-core">
-      <img src="./assets/devora-logo-hd.png" alt="DEVORA">
-      <div class="loader-terminal" aria-hidden="true"><span>&gt;</span> <b id="loaderText">initializing community...</b><i></i></div>
+      <div class="loader-mark" aria-hidden="true"><span>&lt;</span><b>D</b><span>/&gt;</span></div>
+      <div class="loader-meta"><span>DEVORA.OS</span><span>01 — 100</span></div>
       <div class="loader-track"><span></span></div>
+      <p id="loaderText">initializing community...</p>
     </div>
   </div>
+  <script>
+    /* CSS also has a fail-safe; this guarantees the boot screen can never trap visitors. */
+    window.__devoraLoaderSafety = window.setTimeout(function () {
+      var loader = document.getElementById('loader');
+      if (loader) loader.classList.add('done');
+      document.body.classList.remove('loading');
+    }, 1800);
+  </script>
 
   <div class="page-progress" aria-hidden="true"><span id="pageProgress"></span></div>
 
@@ -143,12 +154,30 @@
       </div>
 
       <div class="mission-grid">
-        <article class="mission-card reveal"><div class="card-top"><span>01</span><b>&lt;/&gt;</b></div><h3 data-i18n="mission_1_title">Culture numérique</h3><p data-i18n="mission_1_desc">Développer les compétences technologiques et rendre le numérique accessible.</p><i></i></article>
-        <article class="mission-card reveal"><div class="card-top"><span>02</span><b>◈</b></div><h3 data-i18n="mission_2_title">Solutions locales</h3><p data-i18n="mission_2_desc">Explorer les défis de la société et prototyper des réponses créatives.</p><i></i></article>
-        <article class="mission-card reveal"><div class="card-top"><span>03</span><b>PLAY</b></div><h3 data-i18n="mission_3_title">Jeux vidéo</h3><p data-i18n="mission_3_desc">Faire émerger les talents et stimuler une industrie créative locale.</p><i></i></article>
-        <article class="mission-card reveal"><div class="card-top"><span>04</span><b>LAB</b></div><h3 data-i18n="mission_4_title">Ateliers scientifiques</h3><p data-i18n="mission_4_desc">Apprendre par l'expérience, les essais, les erreurs et la collaboration.</p><i></i></article>
-        <article class="mission-card reveal"><div class="card-top"><span>05</span><b>LIVE</b></div><h3 data-i18n="mission_5_title">Événements & camps</h3><p data-i18n="mission_5_desc">Créer des rencontres, conférences et expériences thématiques mémorables.</p><i></i></article>
-        <article class="mission-card reveal"><div class="card-top"><span>06</span><b>∞</b></div><h3 data-i18n="mission_6_title">Clubs & partenariats</h3><p data-i18n="mission_6_desc">Relier les passionnés, associations, institutions et acteurs publics.</p><i></i></article>
+        <article class="mission-card reveal">
+          <div class="mission-art art-code" aria-hidden="true"><span>&lt;h1&gt;</span><b>build_the_future</b><i></i><i></i><i></i><em>01</em></div>
+          <div class="mission-card-copy"><div class="card-top"><span>01</span><b>&lt;/&gt;</b></div><h3 data-i18n="mission_1_title">Culture numérique</h3><p data-i18n="mission_1_desc">Développer les compétences technologiques et rendre le numérique accessible.</p></div>
+        </article>
+        <article class="mission-card reveal">
+          <div class="mission-art art-local" aria-hidden="true"><span></span><span></span><span></span><b>LOCAL → IMPACT</b><em>02</em></div>
+          <div class="mission-card-copy"><div class="card-top"><span>02</span><b>◈</b></div><h3 data-i18n="mission_2_title">Solutions locales</h3><p data-i18n="mission_2_desc">Explorer les défis de la société et prototyper des réponses créatives.</p></div>
+        </article>
+        <article class="mission-card reveal">
+          <div class="mission-art art-game" aria-hidden="true"><div><i></i><i></i><i></i><i></i></div><b>PLAYER_01</b><span>▶</span><em>03</em></div>
+          <div class="mission-card-copy"><div class="card-top"><span>03</span><b>PLAY</b></div><h3 data-i18n="mission_3_title">Jeux vidéo</h3><p data-i18n="mission_3_desc">Faire émerger les talents et stimuler une industrie créative locale.</p></div>
+        </article>
+        <article class="mission-card reveal">
+          <div class="mission-art art-lab" aria-hidden="true"><span></span><i></i><i></i><i></i><b>LAB / TEST / LEARN</b><em>04</em></div>
+          <div class="mission-card-copy"><div class="card-top"><span>04</span><b>LAB</b></div><h3 data-i18n="mission_4_title">Ateliers scientifiques</h3><p data-i18n="mission_4_desc">Apprendre par l'expérience, les essais, les erreurs et la collaboration.</p></div>
+        </article>
+        <article class="mission-card reveal">
+          <div class="mission-art art-live" aria-hidden="true"><span>LIVE</span><div><i></i><i></i><i></i><i></i><i></i></div><b>PEOPLE × IDEAS</b><em>05</em></div>
+          <div class="mission-card-copy"><div class="card-top"><span>05</span><b>LIVE</b></div><h3 data-i18n="mission_5_title">Événements & camps</h3><p data-i18n="mission_5_desc">Créer des rencontres, conférences et expériences thématiques mémorables.</p></div>
+        </article>
+        <article class="mission-card reveal">
+          <div class="mission-art art-network" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><b>CONNECTED</b><em>06</em></div>
+          <div class="mission-card-copy"><div class="card-top"><span>06</span><b>∞</b></div><h3 data-i18n="mission_6_title">Clubs & partenariats</h3><p data-i18n="mission_6_desc">Relier les passionnés, associations, institutions et acteurs publics.</p></div>
+        </article>
       </div>
     </section>
 
@@ -208,7 +237,7 @@
             <a href="tel:+212785148503"><small data-i18n="contact_phone">Téléphone</small><b>+212 785 148 503</b></a>
             <div><small data-i18n="contact_location">Siège</small><b data-i18n="contact_address">Dar Chabab Bir Anzaran, Tan-Tan</b></div>
           </div>
-          <div class="socials"><a href="https://www.instagram.com/devora_tantan" target="_blank" rel="noreferrer">Instagram</a><a href="https://web.facebook.com/profile.php?id=61576393482712" target="_blank" rel="noreferrer">Facebook</a></div>
+          <div class="socials"><a href="https://www.linkedin.com/in/devora-association/" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://www.instagram.com/devora_tantan" target="_blank" rel="noreferrer">Instagram</a><a href="https://web.facebook.com/profile.php?id=61576393482712" target="_blank" rel="noreferrer">Facebook</a></div>
         </div>
 
         <form class="contact-form reveal" id="contactForm">
