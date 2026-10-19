@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#05070c">
+  <meta name="color-scheme" content="dark light">
   <meta name="description" content="DEVORA rassemble, forme et accompagne la jeunesse de Tan-Tan autour du code, de l'innovation et des métiers numériques.">
   <title>DEVORA — Coder l'avenir depuis Tan-Tan</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +13,15 @@
   <link rel="icon" href="./assets/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="192x192" href="./assets/devora-favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <script>
+    try {
+      var preferredTheme = localStorage.getItem('devora-theme');
+      if (preferredTheme === 'light' || preferredTheme === 'dark') {
+        document.documentElement.dataset.theme = preferredTheme;
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', preferredTheme === 'light' ? '#eef6fc' : '#05070c');
+      }
+    } catch (error) {}
+  </script>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body class="loading">
@@ -19,8 +29,12 @@
 
   <div class="loader" id="loader" aria-label="Chargement">
     <div class="loader-core">
-      <div class="loader-mark" aria-hidden="true"><span>&lt;</span><b>D</b><span>/&gt;</span></div>
-      <div class="loader-meta"><span>DEVORA.OS</span><span>01 — 100</span></div>
+      <div class="loader-code" aria-hidden="true"><span>const future =</span><span>community.build();</span></div>
+      <div class="loader-mark" aria-hidden="true">
+        <img src="./assets/devora-logo-adaptive-dark.png" alt="">
+        <span class="loader-scan"></span>
+      </div>
+      <div class="loader-meta"><span>DEVORA.OS / CINEMATIC BOOT</span><span id="loaderPercent">000</span></div>
       <div class="loader-track"><span></span></div>
       <p id="loaderText">initializing community...</p>
     </div>
@@ -35,10 +49,15 @@
   </script>
 
   <div class="page-progress" aria-hidden="true"><span id="pageProgress"></span></div>
+  <div class="theme-wipe" aria-hidden="true"></div>
+  <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
 
   <header class="site-header" id="siteHeader">
     <a class="brand" href="#home" aria-label="DEVORA — Accueil">
-      <img src="./assets/devora-logo-hd.png" alt="">
+      <span class="adaptive-logo adaptive-logo--brand" aria-hidden="true">
+        <img class="logo-dark" src="./assets/devora-logo-adaptive-dark.png" width="2200" height="1943" alt="">
+        <img class="logo-light" src="./assets/devora-logo-adaptive-light.png" width="2200" height="1943" alt="">
+      </span>
     </a>
 
     <nav class="desktop-nav" aria-label="Navigation principale">
@@ -80,6 +99,11 @@
       <canvas id="networkCanvas" aria-hidden="true"></canvas>
       <div class="hero-grid" aria-hidden="true"></div>
       <div class="hero-glow" aria-hidden="true"></div>
+      <div class="cinema-grain" aria-hidden="true"></div>
+      <div class="cinema-beam beam-a" aria-hidden="true"></div>
+      <div class="cinema-beam beam-b" aria-hidden="true"></div>
+      <div class="hero-frame-label frame-top" aria-hidden="true">DVR / SYSTEM 01</div>
+      <div class="hero-frame-label frame-side" aria-hidden="true">SCENE · BUILD THE FUTURE</div>
 
       <div class="hero-copy">
         <p class="eyebrow hero-enter"><span class="live-pulse"></span><span data-i18n="hero_kicker">Association technologique · Tan-Tan</span></p>
@@ -101,17 +125,28 @@
       </div>
 
       <div class="hero-visual hero-enter" aria-label="DEVORA — Code the future">
+        <div class="logo-stage" aria-hidden="true">
+          <span class="stage-corner corner-a"></span><span class="stage-corner corner-b"></span><span class="stage-corner corner-c"></span><span class="stage-corner corner-d"></span>
+          <div class="logo-code-rain"><i>01000100</i><i>01010110</i><i>01010010</i><i>BUILD()</i><i>CREATE()</i></div>
+        </div>
         <div class="orbit orbit-a"><i></i><i></i></div>
         <div class="orbit orbit-b"><i></i></div>
         <div class="code-fragment fragment-a" aria-hidden="true"><span>01</span> dream();</div>
         <div class="code-fragment fragment-b" aria-hidden="true"><span>02</span> learn();</div>
         <div class="code-fragment fragment-c" aria-hidden="true"><span>03</span> build();</div>
-        <img class="hero-logo" src="./assets/devora-logo-hd.png" alt="DEVORA — Code the future">
+        <span class="adaptive-logo hero-logo">
+          <img class="logo-dark" src="./assets/devora-logo-adaptive-dark.png" width="2200" height="1943" alt="DEVORA — Code the future">
+          <img class="logo-light" src="./assets/devora-logo-adaptive-light.png" width="2200" height="1943" alt="">
+        </span>
         <div class="hero-signal"><span></span><b data-i18n="hero_signal">Système communautaire actif</b><small>28.438° N · 11.103° W</small></div>
       </div>
 
       <a class="scroll-marker" href="#about"><span></span><b data-i18n="scroll">Défiler pour explorer</b></a>
     </section>
+
+    <div class="cinematic-ticker" aria-hidden="true">
+      <div><span>CODE THE FUTURE</span><i>◆</i><span>LEARN BY BUILDING</span><i>◆</i><span>TAN-TAN → WORLD</span><i>◆</i><span>CREATE TOGETHER</span><i>◆</i><span>CODE THE FUTURE</span><i>◆</i><span>LEARN BY BUILDING</span><i>◆</i></div>
+    </div>
 
     <section class="section about" id="about">
       <div class="section-index reveal"><span>01</span><b data-i18n="about_kicker">Origine / Vision</b></div>
@@ -126,7 +161,7 @@
       <div class="founder-layout">
         <figure class="founder-portrait reveal">
           <div class="portrait-frame">
-            <img src="./assets/abdellah-boudia.jpg" alt="Portrait d'Abdellah Boudia, fondateur de DEVORA" data-i18n-alt="founder_alt">
+            <img src="./assets/abdellah-boudia.jpg" width="1254" height="1254" loading="lazy" decoding="async" alt="Portrait d'Abdellah Boudia, fondateur de DEVORA" data-i18n-alt="founder_alt">
             <span class="portrait-scan" aria-hidden="true"></span>
             <div class="portrait-coordinates" aria-hidden="true">DVR // FOUNDER // 2025</div>
           </div>
@@ -254,7 +289,12 @@
   </main>
 
   <footer>
-    <a class="footer-logo" href="#home"><img src="./assets/devora-logo-hd.png" alt="DEVORA"></a>
+    <a class="footer-logo" href="#home" aria-label="DEVORA">
+      <span class="adaptive-logo">
+        <img class="logo-dark" src="./assets/devora-logo-adaptive-dark.png" width="2200" height="1943" loading="lazy" decoding="async" alt="DEVORA">
+        <img class="logo-light" src="./assets/devora-logo-adaptive-light.png" width="2200" height="1943" loading="lazy" decoding="async" alt="">
+      </span>
+    </a>
     <p data-i18n="footer_line">Coder l'avenir depuis Tan-Tan.</p>
     <div><span>© 2026 DEVORA</span><a href="#home" data-i18n="footer_top">Retour en haut ↑</a></div>
   </footer>
