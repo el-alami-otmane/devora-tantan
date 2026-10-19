@@ -38,22 +38,12 @@ const root = document.documentElement;
 const body = document.body;
 const loader = document.querySelector('#loader');
 const loaderText = document.querySelector('#loaderText');
-const loaderPercent = document.querySelector('#loaderPercent');
 const themeToggle = document.querySelector('#themeToggle');
 const pageProgress = document.querySelector('#pageProgress');
 const siteHeader = document.querySelector('#siteHeader');
 const menuButton = document.querySelector('#menuButton');
 const mobileNav = document.querySelector('#mobileNav');
-
-function readPreference(key) {
-  try { return localStorage.getItem(key); } catch (error) { return null; }
-}
-function savePreference(key, value) {
-  try { localStorage.setItem(key, value); } catch (error) { /* Preferences remain optional. */ }
-}
-
-let currentLanguage = readPreference('devora-language') || 'fr';
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let currentLanguage = localStorage.getItem('devora-language') || 'fr';
 
 function translatePage(language) {
   const lang = translations[language] ? language : 'fr';
@@ -81,7 +71,7 @@ function translatePage(language) {
     button.setAttribute('aria-pressed', String(button.dataset.lang === lang));
   });
   updateThemeLabel();
-  savePreference('devora-language', lang);
+  localStorage.setItem('devora-language', lang);
 }
 
 function updateThemeLabel() {
@@ -90,7 +80,7 @@ function updateThemeLabel() {
   themeToggle.setAttribute('aria-label', isDark ? dictionary.theme_light : dictionary.theme_dark);
 }
 
-const savedTheme = readPreference('devora-theme');
+const savedTheme = localStorage.getItem('devora-theme');
 if (savedTheme === 'light' || savedTheme === 'dark') root.dataset.theme = savedTheme;
 translatePage(currentLanguage);
 
@@ -99,20 +89,10 @@ document.querySelectorAll('[data-lang]').forEach((button) => {
 });
 
 themeToggle.addEventListener('click', () => {
-  const nextTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
-  root.classList.remove('theme-switching');
-  void root.offsetWidth;
-  root.classList.add('theme-switching');
-
-  const applyTheme = () => {
-    root.dataset.theme = nextTheme;
-    savePreference('devora-theme', nextTheme);
-    document.querySelector('meta[name="theme-color"]').setAttribute('content', nextTheme === 'dark' ? '#05070c' : '#eef6fc');
-    updateThemeLabel();
-  };
-
-  applyTheme();
-  window.setTimeout(() => root.classList.remove('theme-switching'), 760);
+  root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('devora-theme', root.dataset.theme);
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', root.dataset.theme === 'dark' ? '#05070c' : '#edf3fa');
+  updateThemeLabel();
 });
 
 function closeMenu() {
@@ -133,10 +113,8 @@ mobileNav.querySelectorAll('a').forEach((link) => link.addEventListener('click',
 
 function updateScrollUi() {
   const max = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = max > 0 ? window.scrollY / max : 0;
-  pageProgress.style.width = `${progress * 100}%`;
+  pageProgress.style.width = `${max > 0 ? (window.scrollY / max) * 100 : 0}%`;
   siteHeader.classList.toggle('scrolled', window.scrollY > 28);
-  if (!prefersReducedMotion) root.style.setProperty('--hero-drift', `${Math.min(window.scrollY * .075, 44)}px`);
 }
 window.addEventListener('scroll', updateScrollUi, { passive: true });
 updateScrollUi();
@@ -145,19 +123,15 @@ const revealItems = [...document.querySelectorAll('.reveal')];
 revealItems.forEach((item, index) => {
   item.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
 });
-if ('IntersectionObserver' in window) {
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -45px' });
-  revealItems.forEach((item) => revealObserver.observe(item));
-} else {
-  revealItems.forEach((item) => item.classList.add('visible'));
-}
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -45px' });
+revealItems.forEach((item) => revealObserver.observe(item));
 
 document.querySelectorAll('.filter').forEach((button) => {
   button.addEventListener('click', () => {
@@ -174,11 +148,11 @@ document.querySelectorAll('.filter').forEach((button) => {
 const canvas = document.querySelector('#networkCanvas');
 const context = canvas.getContext('2d');
 const hero = document.querySelector('.hero');
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let particles = [];
 let canvasWidth = 0;
 let canvasHeight = 0;
 let animationFrame = 0;
-let heroCanvasVisible = true;
 
 function resizeCanvas() {
   const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -228,7 +202,7 @@ function drawNetwork() {
       }
     }
   });
-  if (!prefersReducedMotion && heroCanvasVisible && !document.hidden) animationFrame = requestAnimationFrame(drawNetwork);
+  if (!prefersReducedMotion) animationFrame = requestAnimationFrame(drawNetwork);
 }
 
 resizeCanvas();
@@ -239,49 +213,15 @@ window.addEventListener('resize', () => {
   drawNetwork();
 }, { passive: true });
 
-if ('IntersectionObserver' in window) {
-  const canvasObserver = new IntersectionObserver(([entry]) => {
-    heroCanvasVisible = entry.isIntersecting;
-    cancelAnimationFrame(animationFrame);
-    if (heroCanvasVisible && !document.hidden) drawNetwork();
-  }, { threshold: 0.01 });
-  canvasObserver.observe(hero);
-}
-document.addEventListener('visibilitychange', () => {
-  cancelAnimationFrame(animationFrame);
-  if (!document.hidden && heroCanvasVisible) drawNetwork();
-});
-
 const heroVisual = document.querySelector('.hero-visual');
 if (!prefersReducedMotion && window.matchMedia('(pointer: fine)').matches) {
   heroVisual.addEventListener('pointermove', (event) => {
     const bounds = heroVisual.getBoundingClientRect();
     const x = (event.clientX - bounds.left) / bounds.width - .5;
     const y = (event.clientY - bounds.top) / bounds.height - .5;
-    heroVisual.style.setProperty('--tilt-x', `${-y * 2.2}deg`);
-    heroVisual.style.setProperty('--tilt-y', `${x * 2.2}deg`);
+    heroVisual.style.transform = `perspective(900px) rotateX(${-y * 2.2}deg) rotateY(${x * 2.2}deg)`;
   });
-  heroVisual.addEventListener('pointerleave', () => {
-    heroVisual.style.setProperty('--tilt-x', '0deg');
-    heroVisual.style.setProperty('--tilt-y', '0deg');
-  });
-
-  document.addEventListener('pointermove', (event) => {
-    root.style.setProperty('--pointer-x', `${event.clientX}px`);
-    root.style.setProperty('--pointer-y', `${event.clientY}px`);
-  }, { passive: true });
-
-  document.querySelectorAll('.mission-card,.program-card').forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const bounds = card.getBoundingClientRect();
-      const x = (event.clientX - bounds.left) / bounds.width;
-      const y = (event.clientY - bounds.top) / bounds.height;
-      card.style.setProperty('--card-x', `${x * 100}%`);
-      card.style.setProperty('--card-y', `${y * 100}%`);
-      card.style.transform = `perspective(900px) rotateX(${(0.5 - y) * 2.4}deg) rotateY(${(x - 0.5) * 2.4}deg) translateY(-6px)`;
-    });
-    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-  });
+  heroVisual.addEventListener('pointerleave', () => { heroVisual.style.transform = ''; });
 }
 
 const contactForm = document.querySelector('#contactForm');
@@ -321,19 +261,7 @@ function dismissLoader() {
   body.classList.remove('loading');
 }
 
-// Play the cinematic boot once per tab session, never trapping navigation.
-let introPlayed = false;
-try { introPlayed = sessionStorage.getItem('devora-intro-played') === '1'; } catch (error) {}
-if (!introPlayed && !prefersReducedMotion) {
-  const introStarted = performance.now();
-  const updateLoaderPercent = (now) => {
-    const progress = Math.min(100, Math.round(((now - introStarted) / 1180) * 100));
-    if (loaderPercent) loaderPercent.textContent = String(progress).padStart(3, '0');
-    if (progress < 100) requestAnimationFrame(updateLoaderPercent);
-  };
-  requestAnimationFrame(updateLoaderPercent);
-  try { sessionStorage.setItem('devora-intro-played', '1'); } catch (error) {}
-  window.setTimeout(dismissLoader, 1240);
-} else {
-  dismissLoader();
-}
+// Do not wait for every remote font or image. The interface becomes usable as
+// soon as the document is ready, and the inline safety timer covers JS errors.
+window.setTimeout(dismissLoader, prefersReducedMotion ? 0 : 720);
+window.addEventListener('pageshow', dismissLoader, { once: true });
